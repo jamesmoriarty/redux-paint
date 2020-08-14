@@ -1,7 +1,7 @@
-import React from 'react';
-import './App.css';
-import { useRef, useEffect } from 'react';
-import { configureStore } from '@reduxjs/toolkit'
+import React from "react";
+import "./App.css";
+import { useRef, useEffect } from "react";
+import { configureStore } from "@reduxjs/toolkit";
 
 function App() {
   let refCanvas = useRef(null),
@@ -12,17 +12,13 @@ function App() {
       type: type,
       payload: {
         x: event.pageX - refCanvas.current.offsetLeft,
-        y: event.pageY - refCanvas.current.offsetTop
-      }
-    }
-  };
+        y: event.pageY - refCanvas.current.offsetTop,
+      },
+    };
+  }
 
   function mouseReducer(state = { x: 0, y: 0 }, action) {
-    console.log(action)
-
-    if (refCanvas.current === null) return state
-
-    const ctx = refCanvas.current.getContext('2d')
+    const ctx = refCanvas.current.getContext("2d");
 
     switch (action.type) {
       case "mousedown":
@@ -34,32 +30,42 @@ function App() {
         ctx.stroke();
         return { ...state, x: action.payload.x, y: action.payload.y };
       default:
-        return state
+        return state;
     }
   }
 
-  const store = configureStore({ reducer: mouseReducer })
-
   useEffect(() => {
-    const nodeCanvas = refCanvas.current,
-      nodeCanvasContainer = refCanvasContainer.current,
-      stylesCanvasContainer = getComputedStyle(nodeCanvasContainer);
+    const store = configureStore({ reducer: mouseReducer }),
+      onMouseMove = (event) =>
+        store.dispatch(mapMouseEvent("mousemove", event));
 
-    nodeCanvas.width = parseInt(stylesCanvasContainer.getPropertyValue('width'));
-    nodeCanvas.height = parseInt(stylesCanvasContainer.getPropertyValue('height'));
+    store.subscribe(() => console.log(store.getState()));
 
-    const onMouseMove = event => store.dispatch(mapMouseEvent("mousemove", event))
+    refCanvas.current.width = parseInt(
+      getComputedStyle(refCanvasContainer.current).getPropertyValue("width")
+    );
+    refCanvas.current.height = parseInt(
+      getComputedStyle(refCanvasContainer.current).getPropertyValue("height")
+    );
 
-    nodeCanvas.addEventListener('mousedown', (event) => {
-      store.dispatch(mapMouseEvent("mousedown", event))
+    refCanvas.current.addEventListener(
+      "mousedown",
+      (event) => {
+        store.dispatch(mapMouseEvent("mousedown", event));
 
-      nodeCanvas.addEventListener('mousemove', onMouseMove, false);
-    }, false);
+        refCanvas.current.addEventListener("mousemove", onMouseMove, false);
+      },
+      false
+    );
 
-    nodeCanvas.addEventListener('mouseup', () => {
-      nodeCanvas.removeEventListener('mousemove', onMouseMove, false);
-    }, false);
-  })
+    refCanvas.current.addEventListener(
+      "mouseup",
+      () => {
+        refCanvas.current.removeEventListener("mousemove", onMouseMove, false);
+      },
+      false
+    );
+  });
 
   return (
     <div ref={refCanvasContainer} className="App">
