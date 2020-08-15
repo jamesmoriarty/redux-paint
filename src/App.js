@@ -1,70 +1,58 @@
 import React from "react";
-import "./App.css";
 import { useRef, useEffect } from "react";
-import { configureStore } from "@reduxjs/toolkit";
+// import { connect } from "react-redux";
+import { mousedown, mousemove } from "./redux/actions";
+import store from "./redux/store";
 
-function App() {
+function bindEventListeners(refCanvasContainer, refCanvas) {
+  const onMouseMove = (event) => store.dispatch(mousemove(refCanvas, event));
+
+  refCanvas.current.width = parseInt(
+    getComputedStyle(refCanvasContainer.current).getPropertyValue("width")
+  );
+  refCanvas.current.height = parseInt(
+    getComputedStyle(refCanvasContainer.current).getPropertyValue("height")
+  );
+
+  refCanvas.current.addEventListener(
+    "mousedown",
+    (event) => {
+      store.dispatch(mousedown(refCanvas, event));
+
+      refCanvas.current.addEventListener("mousemove", onMouseMove, false);
+    },
+    false
+  );
+
+  refCanvas.current.addEventListener(
+    "mouseup",
+    () => {
+      refCanvas.current.removeEventListener("mousemove", onMouseMove, false);
+    },
+    false
+  );
+}
+
+function App(props) {
   let refCanvas = useRef(null),
     refCanvasContainer = useRef(null);
 
-  function mapMouseEvent(type, event) {
-    return {
-      type: type,
-      payload: {
-        x: event.pageX - refCanvas.current.offsetLeft,
-        y: event.pageY - refCanvas.current.offsetTop,
-      },
-    };
-  }
-
-  function mouseReducer(state = { x: 0, y: 0 }, action) {
-    const ctx = refCanvas.current.getContext("2d");
-
-    switch (action.type) {
-      case "mousedown":
-        ctx.beginPath();
-        ctx.moveTo(action.payload.x, action.payload.y);
-        return { ...state, x: action.payload.x, y: action.payload.y };
-      case "mousemove":
-        ctx.lineTo(action.payload.x, action.payload.y);
-        ctx.stroke();
-        return { ...state, x: action.payload.x, y: action.payload.y };
-      default:
-        return state;
-    }
-  }
-
+  useEffect(() => bindEventListeners(refCanvasContainer, refCanvas));
   useEffect(() => {
-    const store = configureStore({ reducer: mouseReducer }),
-      onMouseMove = (event) =>
-        store.dispatch(mapMouseEvent("mousemove", event));
+    store.subscribe(()=> {
+      const ctx = refCanvas.current.getContext("2d")
 
-    store.subscribe(() => console.log(store.getState()));
+      for (const line of store.getState().lines) {
+        const { x, y } = line[0];
+        ctx.beginPath();
+        ctx.moveTo(x, y);
+        for (const { x, y } of line) {
+          ctx.lineTo(x, y);
+          ctx.stroke();
+        }
+      }
+    })
 
-    refCanvas.current.width = parseInt(
-      getComputedStyle(refCanvasContainer.current).getPropertyValue("width")
-    );
-    refCanvas.current.height = parseInt(
-      getComputedStyle(refCanvasContainer.current).getPropertyValue("height")
-    );
-
-    refCanvas.current.addEventListener(
-      "mousedown",
-      (event) => {
-        store.dispatch(mapMouseEvent("mousedown", event));
-
-        refCanvas.current.addEventListener("mousemove", onMouseMove, false);
-      },
-      false
-    );
-
-    refCanvas.current.addEventListener(
-      "mouseup",
-      () => {
-        refCanvas.current.removeEventListener("mousemove", onMouseMove, false);
-      },
-      false
-    );
   });
 
   return (
@@ -73,5 +61,11 @@ function App() {
     </div>
   );
 }
+
+// const mapStateToProps = state => ({
+//   lines: state.lines
+// })
+
+// export default connect(mapStateToProps)(App);
 
 export default App;
