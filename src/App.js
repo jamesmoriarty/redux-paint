@@ -30,7 +30,7 @@ function bindEventListeners(refCanvasContainer, refCanvas) {
   };
 }
 
-function App(props) {
+function App({lines, dispatch}) {
   let refCanvas = useRef(null),
     refCanvasContainer = useRef(null);
 
@@ -39,9 +39,10 @@ function App(props) {
   }, []);
 
   useEffect(() => {
+    refCanvas.current.width = refCanvas.current.width;
     const ctx = refCanvas.current.getContext("2d");
 
-    for (const line of props.lines) {
+    for (const line of lines) {
       const { x, y } = line[0];
       ctx.beginPath();
       ctx.moveTo(x, y);
@@ -55,6 +56,7 @@ function App(props) {
   return (
     <div ref={refCanvasContainer} className="App">
       <canvas ref={refCanvas}></canvas>
+      <button onClick={() => { dispatch(lineUndo()) }}>Undo</button>
     </div>
   );
 }
