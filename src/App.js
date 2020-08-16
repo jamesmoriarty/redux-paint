@@ -1,7 +1,8 @@
 import React, { useEffect, useRef } from "react";
 import { connect } from "react-redux";
-import { lineStart, lineNext, lineUndo } from "./redux/actions";
+import { lineStart, lineNext } from "./redux/actions";
 import store from "./redux/store";
+import UndoButton from "./components/UndoButton";
 
 function bindEventListeners(refCanvasContainer, refCanvas) {
   refCanvas.current.width = parseInt(
@@ -30,7 +31,22 @@ function bindEventListeners(refCanvasContainer, refCanvas) {
   };
 }
 
-function App({lines, dispatch}) {
+function drawLines(refCanvas, lines) {
+  refCanvas.current.width = refCanvas.current.width;
+  const ctx = refCanvas.current.getContext("2d");
+
+  for (const line of lines) {
+    const { x, y } = line[0];
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+    for (const { x, y } of line) {
+      ctx.lineTo(x, y);
+      ctx.stroke();
+    }
+  }
+}
+
+function App({ lines, dispatch }) {
   let refCanvas = useRef(null),
     refCanvasContainer = useRef(null);
 
@@ -39,24 +55,13 @@ function App({lines, dispatch}) {
   }, []);
 
   useEffect(() => {
-    refCanvas.current.width = refCanvas.current.width;
-    const ctx = refCanvas.current.getContext("2d");
-
-    for (const line of lines) {
-      const { x, y } = line[0];
-      ctx.beginPath();
-      ctx.moveTo(x, y);
-      for (const { x, y } of line) {
-        ctx.lineTo(x, y);
-        ctx.stroke();
-      }
-    }
+    drawLines(refCanvas, lines);
   });
 
   return (
     <div ref={refCanvasContainer} className="App">
       <canvas ref={refCanvas}></canvas>
-      <button onClick={() => { dispatch(lineUndo()) }}>Undo</button>
+      <UndoButton />
     </div>
   );
 }
@@ -66,5 +71,3 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps, null)(App);
-
-//export default App;

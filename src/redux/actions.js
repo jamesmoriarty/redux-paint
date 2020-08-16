@@ -18,5 +18,5 @@ export const lineNext = (refCanvas, event) => ({
 
 export const lineUndo = () => ({
   type: LINE_UNDO,
-  payload: {}
+  payload: {},
 });

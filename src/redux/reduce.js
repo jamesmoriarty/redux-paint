@@ -20,9 +20,9 @@ function reduce(state = { lines: [] }, action) {
       };
     case LINE_UNDO:
       return {
-          ...state,
-          lines: state.lines.slice(0, -1)
-      }
+        ...state,
+        lines: state.lines.slice(0, -1),
+      };
     default:
       return state;
   }

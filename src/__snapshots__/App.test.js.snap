@@ -9,6 +9,9 @@ Object {
         class="App"
       >
         <canvas />
+        <button>
+          Undo
+        </button>
       </div>
     </div>
   </body>,
@@ -17,6 +20,9 @@ Object {
       class="App"
     >
       <canvas />
+      <button>
+        Undo
+      </button>
     </div>
   </div>,
   "debug": [Function],
