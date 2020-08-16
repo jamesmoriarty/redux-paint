@@ -1,15 +1,15 @@
-import { MOUSE_DOWN, MOUSE_MOVE } from "./actionTypes";
+import { LINE_START, LINE_NEXT, LINE_UNDO } from "./actionTypes";
 
 function reduce(state = { lines: [] }, action) {
   switch (action.type) {
-    case MOUSE_DOWN:
+    case LINE_START:
       return {
         ...state,
         lines: state.lines.concat([
           [{ x: action.payload.x, y: action.payload.y }],
         ]),
       };
-    case MOUSE_MOVE:
+    case LINE_NEXT:
       var [last, ...rest] = state.lines.slice().reverse();
       return {
         ...state,
@@ -18,6 +18,11 @@ function reduce(state = { lines: [] }, action) {
           last.concat([{ x: action.payload.x, y: action.payload.y }]),
         ],
       };
+    case LINE_UNDO:
+      return {
+          ...state,
+          lines: state.lines.slice(0, -1)
+      }
     default:
       return state;
   }

@@ -1,24 +1,24 @@
 import React, { useEffect, useRef } from "react";
 import { connect } from "react-redux";
-import { mousedown, mousemove } from "./redux/actions";
+import { lineStart, lineNext, lineUndo } from "./redux/actions";
 import store from "./redux/store";
 
 function bindEventListeners(refCanvasContainer, refCanvas) {
-  const onMouseMove = (event) => store.dispatch(mousemove(refCanvas, event)),
-    onMouseUp = (event) =>
-      refCanvas.current.removeEventListener("mousemove", onMouseMove, false),
-    onMouseDown = (event) => {
-      store.dispatch(mousedown(refCanvas, event));
-
-      refCanvas.current.addEventListener("mousemove", onMouseMove, false);
-    };
-
   refCanvas.current.width = parseInt(
     getComputedStyle(refCanvasContainer.current).getPropertyValue("width")
   );
   refCanvas.current.height = parseInt(
     getComputedStyle(refCanvasContainer.current).getPropertyValue("height")
   );
+
+  const onMouseMove = (event) => store.dispatch(lineNext(refCanvas, event)),
+    onMouseUp = (event) =>
+      refCanvas.current.removeEventListener("mousemove", onMouseMove, false),
+    onMouseDown = (event) => {
+      store.dispatch(lineStart(refCanvas, event));
+
+      refCanvas.current.addEventListener("mousemove", onMouseMove, false);
+    };
 
   refCanvas.current.addEventListener("mousedown", onMouseDown, false);
   refCanvas.current.addEventListener("mouseup", onMouseUp, false);
@@ -63,6 +63,6 @@ const mapStateToProps = (state) => ({
   lines: state.lines,
 });
 
-export default connect(mapStateToProps)(App);
+export default connect(mapStateToProps, null)(App);
 
 //export default App;
