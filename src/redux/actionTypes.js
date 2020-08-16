@@ -1,3 +1,3 @@
-export const LINE_START = "point/start";
-export const LINE_NEXT = "point/next";
-export const LINE_UNDO = "point/undo";
+export const LINE_START = "line/start";
+export const LINE_NEXT = "line/next";
+export const LINE_UNDO = "line/undo";
