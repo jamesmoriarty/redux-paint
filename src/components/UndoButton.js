@@ -1,16 +1,15 @@
 import React from "react";
+import Button from '@material-ui/core/Button';
 import { connect } from "react-redux";
 import { lineUndo } from "./../redux/actions";
 
 function UndoButton({ dispatch }) {
   return (
-    <button
-      onClick={() => {
+    <Button variant="contained" color="primary" onClick={() => {
         dispatch(lineUndo());
-      }}
-    >
+      }}>
       Undo
-    </button>
+    </Button>
   );
 }
 

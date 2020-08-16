@@ -1,4 +1,7 @@
 import React, { useEffect, useRef } from "react";
+import Container from '@material-ui/core/Container';
+import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
 import { connect } from "react-redux";
 import { lineStart, lineNext } from "./redux/actions";
 import store from "./redux/store";
@@ -59,10 +62,14 @@ function App({ lines, dispatch }) {
   });
 
   return (
-    <div ref={refCanvasContainer} className="App">
-      <canvas ref={refCanvas}></canvas>
-      <UndoButton />
-    </div>
+    <Container maxWidth="sm" ref={refCanvasContainer}>
+      <Card>
+        <canvas ref={refCanvas}></canvas>
+        <CardActions>
+          <UndoButton />
+        </CardActions>
+      </Card>
+    </Container>
   );
 }
 
