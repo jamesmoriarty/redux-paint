@@ -1,11 +1,32 @@
 import React, { useEffect, useRef } from "react";
-import Container from '@material-ui/core/Container';
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
 import { connect } from "react-redux";
+import { makeStyles } from "@material-ui/core/styles";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
+import Card from "@material-ui/core/Card";
+import Container from "@material-ui/core/Container";
+import UndoButton from "./components/UndoButton";
 import { lineStart, lineNext } from "./redux/actions";
 import store from "./redux/store";
-import UndoButton from "./components/UndoButton";
+
+const useStyles = makeStyles((theme) => ({
+  title: {
+    flexGrow: 1,
+  },
+  content: {
+    flexGrow: 1,
+    height: "100vh",
+    overflow: "auto",
+  },
+  container: {
+    paddingTop: theme.spacing(8),
+    paddingBottom: theme.spacing(8),
+  },
+  canvas: {
+    height: "70vh",
+  },
+}));
 
 function bindEventListeners(refCanvasContainer, refCanvas) {
   refCanvas.current.width = parseInt(
@@ -50,6 +71,8 @@ function drawLines(refCanvas, lines) {
 }
 
 function App({ lines, dispatch }) {
+  const classes = useStyles();
+
   let refCanvas = useRef(null),
     refCanvasContainer = useRef(null);
 
@@ -62,14 +85,27 @@ function App({ lines, dispatch }) {
   });
 
   return (
-    <Container maxWidth="sm" ref={refCanvasContainer}>
-      <Card>
-        <canvas ref={refCanvas}></canvas>
-        <CardActions>
+    <div>
+      <AppBar position="relative">
+        <Toolbar>
+          <Typography variant="h6" className={classes.title}>
+            Redux Paint
+          </Typography>
           <UndoButton />
-        </CardActions>
-      </Card>
-    </Container>
+        </Toolbar>
+      </AppBar>
+      <main className={classes.content}>
+        <Container
+          maxWidth="lg"
+          className={classes.container}
+          ref={refCanvasContainer}
+        >
+          <Card className={classes.canvas} raised={true}>
+            <canvas ref={refCanvas}></canvas>
+          </Card>
+        </Container>
+      </main>
+    </div>
   );
 }
 
