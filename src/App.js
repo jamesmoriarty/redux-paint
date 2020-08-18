@@ -28,12 +28,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function bindEventListeners(refCanvasContainer, refCanvas) {
+function bindEventListeners(refCanvas) {
   refCanvas.current.width = parseInt(
-    getComputedStyle(refCanvasContainer.current).getPropertyValue("width")
+    getComputedStyle(refCanvas.current.parentNode).getPropertyValue("width")
   );
   refCanvas.current.height = parseInt(
-    getComputedStyle(refCanvasContainer.current).getPropertyValue("height")
+    getComputedStyle(refCanvas.current.parentNode).getPropertyValue("height")
   );
 
   const onMouseMove = (event) => store.dispatch(lineNext(refCanvas, event)),
@@ -73,11 +73,10 @@ function drawLines(refCanvas, lines) {
 function App({ lines, dispatch }) {
   const classes = useStyles();
 
-  let refCanvas = useRef(null),
-    refCanvasContainer = useRef(null);
+  let refCanvas = useRef(null);
 
   useEffect(() => {
-    return bindEventListeners(refCanvasContainer, refCanvas);
+    return bindEventListeners(refCanvas);
   }, []);
 
   useEffect(() => {
@@ -95,11 +94,7 @@ function App({ lines, dispatch }) {
         </Toolbar>
       </AppBar>
       <main className={classes.content}>
-        <Container
-          maxWidth="lg"
-          className={classes.container}
-          ref={refCanvasContainer}
-        >
+        <Container maxWidth="lg" className={classes.container}>
           <Card className={classes.canvas} raised={true}>
             <canvas ref={refCanvas}></canvas>
           </Card>
