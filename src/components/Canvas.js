@@ -29,13 +29,13 @@ function bindEventListeners(refCanvas, dispatch) {
   };
 }
 
-function drawLines(refCanvas, lines) {
+function drawLines(refCanvas, history) {
   // eslint-disable-next-line
   refCanvas.current.width = refCanvas.current.width;
 
   const ctx = refCanvas.current.getContext("2d");
 
-  for (const line of lines) {
+  for (const line of history) {
     const { x, y } = line[0];
     ctx.beginPath();
     ctx.moveTo(x, y);
@@ -46,7 +46,7 @@ function drawLines(refCanvas, lines) {
   }
 }
 
-function Canvas({ lines, dispatch }) {
+function Canvas({ history, dispatch }) {
   let refCanvas = useRef(null);
 
   useEffect(() => {
@@ -54,14 +54,14 @@ function Canvas({ lines, dispatch }) {
   }, [dispatch]);
 
   useEffect(() => {
-    drawLines(refCanvas, lines);
+    drawLines(refCanvas, history);
   });
 
   return <canvas ref={refCanvas}></canvas>;
 }
 
 const mapStateToProps = (state) => ({
-  lines: state.lines,
+  history: state.history,
 });
 
 export default connect(mapStateToProps, null)(Canvas);

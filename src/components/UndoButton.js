@@ -3,12 +3,12 @@ import Button from "@material-ui/core/Button";
 import { connect } from "react-redux";
 import { lineUndo } from "./../redux/actions";
 
-function UndoButton({ lines, dispatch, className }) {
+function UndoButton({ history, dispatch, className }) {
   return (
     <Button
       variant="contained"
       className={className}
-      disabled={lines.length === 0}
+      disabled={history.length === 0}
       onClick={() => {
         dispatch(lineUndo());
       }}
@@ -19,7 +19,7 @@ function UndoButton({ lines, dispatch, className }) {
 }
 
 const mapStateToProps = (state) => ({
-  lines: state.lines,
+  history: state.history,
 });
 
 export default connect(mapStateToProps, null)(UndoButton);

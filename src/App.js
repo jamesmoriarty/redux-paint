@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function App({ lines, dispatch }) {
+function App({ history, dispatch }) {
   const classes = useStyles();
 
   return (
@@ -57,7 +57,7 @@ function App({ lines, dispatch }) {
 }
 
 const mapStateToProps = (state) => ({
-  lines: state.lines,
+  history: state.history,
   future: state.future,
 });
 
