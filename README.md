@@ -1,6 +1,6 @@
 # Redux Paint
 
-Simple "time travelling" paint application.
+Simple "time travelling" paint application. [Example](http://www.jamesmoriarty.xyz/redux-paint/).
 
 ![Screenshot](docs/screenshot.png)
 
