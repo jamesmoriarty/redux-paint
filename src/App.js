@@ -56,9 +56,4 @@ function App({ history, dispatch }) {
   );
 }
 
-const mapStateToProps = (state) => ({
-  history: state.history,
-  future: state.future,
-});
-
-export default connect(mapStateToProps, null)(App);
+export default connect(null, null)(App);
