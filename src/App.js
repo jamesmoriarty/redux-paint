@@ -8,7 +8,6 @@ import Card from "@material-ui/core/Card";
 import Container from "@material-ui/core/Container";
 import UndoButton from "./components/UndoButton";
 import { lineStart, lineNext } from "./redux/actions";
-import store from "./redux/store";
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -28,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function bindEventListeners(refCanvas) {
+function bindEventListeners(refCanvas, dispatch) {
   refCanvas.current.width = parseInt(
     getComputedStyle(refCanvas.current.parentNode).getPropertyValue("width")
   );
@@ -36,11 +35,9 @@ function bindEventListeners(refCanvas) {
     getComputedStyle(refCanvas.current.parentNode).getPropertyValue("height")
   );
 
-  const onMouseMove = (event) => store.dispatch(lineNext(refCanvas, event)),
-    onMouseUp = (event) =>
-      refCanvas.current.removeEventListener("mousemove", onMouseMove, false),
-    onMouseDown = (event) => {
-      store.dispatch(lineStart(refCanvas, event));
+  const onMouseMove = (event) => dispatch(lineNext(refCanvas, event));
+  const onMouseUp = (event) => refCanvas.current.removeEventListener("mousemove", onMouseMove, false);
+  const onMouseDown = (event) => {dispatch(lineStart(refCanvas, event));
 
       refCanvas.current.addEventListener("mousemove", onMouseMove, false);
     };
@@ -56,7 +53,9 @@ function bindEventListeners(refCanvas) {
 }
 
 function drawLines(refCanvas, lines) {
+  // eslint-disable-next-line
   refCanvas.current.width = refCanvas.current.width;
+
   const ctx = refCanvas.current.getContext("2d");
 
   for (const line of lines) {
@@ -76,8 +75,8 @@ function App({ lines, dispatch }) {
   let refCanvas = useRef(null);
 
   useEffect(() => {
-    return bindEventListeners(refCanvas);
-  }, []);
+    return bindEventListeners(refCanvas, dispatch);
+  }, [dispatch]);
 
   useEffect(() => {
     drawLines(refCanvas, lines);
