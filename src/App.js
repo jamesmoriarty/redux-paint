@@ -41,8 +41,8 @@ function App({ history, dispatch }) {
           <Typography variant="h6" className={classes.title}>
             Redux Paint
           </Typography>
-          <UndoButton className={classes.menuButton}/>
-          <RedoButton className={classes.menuButton}/>
+          <UndoButton className={classes.menuButton} />
+          <RedoButton className={classes.menuButton} />
         </Toolbar>
       </AppBar>
       <main className={classes.content}>

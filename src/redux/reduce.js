@@ -26,12 +26,12 @@ function reduce(state = { history: [], future: [] }, action) {
         future: state.future.concat(state.history.slice(-1)),
         history: state.history.slice(0, -1),
       };
-      case LINE_REDO:
-        return {
-          ...state,
-          future: state.future.slice(0, -1),
-          history: state.history.slice().concat(state.future.slice(-1)),
-        };
+    case LINE_REDO:
+      return {
+        ...state,
+        future: state.future.slice(0, -1),
+        history: state.history.slice().concat(state.future.slice(-1)),
+      };
     default:
       return state;
   }
