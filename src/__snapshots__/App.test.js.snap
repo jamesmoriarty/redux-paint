@@ -5,24 +5,88 @@ Object {
   "asFragment": [Function],
   "baseElement": <body>
     <div>
-      <div
-        class="App"
-      >
-        <canvas />
-        <button>
-          Undo
-        </button>
+      <div>
+        <header
+          class="MuiPaper-root MuiAppBar-root MuiAppBar-positionRelative MuiAppBar-colorPrimary MuiPaper-elevation4"
+        >
+          <div
+            class="MuiToolbar-root MuiToolbar-regular MuiToolbar-gutters"
+          >
+            <h6
+              class="MuiTypography-root makeStyles-title-1 MuiTypography-h6"
+            >
+              Redux Paint
+            </h6>
+            <button
+              class="MuiButtonBase-root MuiButton-root MuiButton-contained Mui-disabled Mui-disabled"
+              disabled=""
+              tabindex="-1"
+              type="button"
+            >
+              <span
+                class="MuiButton-label"
+              >
+                Undo
+              </span>
+            </button>
+          </div>
+        </header>
+        <main
+          class="makeStyles-content-2"
+        >
+          <div
+            class="MuiContainer-root makeStyles-container-3 MuiContainer-maxWidthLg"
+          >
+            <div
+              class="MuiPaper-root MuiCard-root makeStyles-canvas-4 MuiPaper-elevation8 MuiPaper-rounded"
+            >
+              <canvas />
+            </div>
+          </div>
+        </main>
       </div>
     </div>
   </body>,
   "container": <div>
-    <div
-      class="App"
-    >
-      <canvas />
-      <button>
-        Undo
-      </button>
+    <div>
+      <header
+        class="MuiPaper-root MuiAppBar-root MuiAppBar-positionRelative MuiAppBar-colorPrimary MuiPaper-elevation4"
+      >
+        <div
+          class="MuiToolbar-root MuiToolbar-regular MuiToolbar-gutters"
+        >
+          <h6
+            class="MuiTypography-root makeStyles-title-1 MuiTypography-h6"
+          >
+            Redux Paint
+          </h6>
+          <button
+            class="MuiButtonBase-root MuiButton-root MuiButton-contained Mui-disabled Mui-disabled"
+            disabled=""
+            tabindex="-1"
+            type="button"
+          >
+            <span
+              class="MuiButton-label"
+            >
+              Undo
+            </span>
+          </button>
+        </div>
+      </header>
+      <main
+        class="makeStyles-content-2"
+      >
+        <div
+          class="MuiContainer-root makeStyles-container-3 MuiContainer-maxWidthLg"
+        >
+          <div
+            class="MuiPaper-root MuiCard-root makeStyles-canvas-4 MuiPaper-elevation8 MuiPaper-rounded"
+          >
+            <canvas />
+          </div>
+        </div>
+      </main>
     </div>
   </div>,
   "debug": [Function],
