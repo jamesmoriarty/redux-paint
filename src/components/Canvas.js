@@ -56,6 +56,7 @@ function Canvas({ lines, dispatch }) {
   useEffect(() => {
     drawLines(refCanvas, lines);
   });
+
   return <canvas ref={refCanvas}></canvas>;
 }
 

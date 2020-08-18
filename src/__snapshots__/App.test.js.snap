@@ -18,7 +18,7 @@ Object {
               Redux Paint
             </h6>
             <button
-              class="MuiButtonBase-root MuiButton-root MuiButton-contained Mui-disabled Mui-disabled"
+              class="MuiButtonBase-root MuiButton-root MuiButton-contained makeStyles-menuButton-2 Mui-disabled Mui-disabled"
               disabled=""
               tabindex="-1"
               type="button"
@@ -29,16 +29,28 @@ Object {
                 Undo
               </span>
             </button>
+            <button
+              class="MuiButtonBase-root MuiButton-root MuiButton-contained Mui-disabled Mui-disabled"
+              disabled=""
+              tabindex="-1"
+              type="button"
+            >
+              <span
+                class="MuiButton-label"
+              >
+                Redo
+              </span>
+            </button>
           </div>
         </header>
         <main
-          class="makeStyles-content-2"
+          class="makeStyles-content-3"
         >
           <div
-            class="MuiContainer-root makeStyles-container-3 MuiContainer-maxWidthLg"
+            class="MuiContainer-root makeStyles-container-4 MuiContainer-maxWidthLg"
           >
             <div
-              class="MuiPaper-root MuiCard-root makeStyles-canvas-4 MuiPaper-elevation8 MuiPaper-rounded"
+              class="MuiPaper-root MuiCard-root makeStyles-canvas-5 MuiPaper-elevation8 MuiPaper-rounded"
             >
               <canvas />
             </div>
@@ -61,7 +73,7 @@ Object {
             Redux Paint
           </h6>
           <button
-            class="MuiButtonBase-root MuiButton-root MuiButton-contained Mui-disabled Mui-disabled"
+            class="MuiButtonBase-root MuiButton-root MuiButton-contained makeStyles-menuButton-2 Mui-disabled Mui-disabled"
             disabled=""
             tabindex="-1"
             type="button"
@@ -72,16 +84,28 @@ Object {
               Undo
             </span>
           </button>
+          <button
+            class="MuiButtonBase-root MuiButton-root MuiButton-contained Mui-disabled Mui-disabled"
+            disabled=""
+            tabindex="-1"
+            type="button"
+          >
+            <span
+              class="MuiButton-label"
+            >
+              Redo
+            </span>
+          </button>
         </div>
       </header>
       <main
-        class="makeStyles-content-2"
+        class="makeStyles-content-3"
       >
         <div
-          class="MuiContainer-root makeStyles-container-3 MuiContainer-maxWidthLg"
+          class="MuiContainer-root makeStyles-container-4 MuiContainer-maxWidthLg"
         >
           <div
-            class="MuiPaper-root MuiCard-root makeStyles-canvas-4 MuiPaper-elevation8 MuiPaper-rounded"
+            class="MuiPaper-root MuiCard-root makeStyles-canvas-5 MuiPaper-elevation8 MuiPaper-rounded"
           >
             <canvas />
           </div>

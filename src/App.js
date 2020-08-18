@@ -8,10 +8,14 @@ import Card from "@material-ui/core/Card";
 import Container from "@material-ui/core/Container";
 import Canvas from "./components/Canvas";
 import UndoButton from "./components/UndoButton";
+import RedoButton from "./components/RedoButton";
 
 const useStyles = makeStyles((theme) => ({
   title: {
     flexGrow: 1,
+  },
+  menuButton: {
+    marginRight: theme.spacing(2),
   },
   content: {
     flexGrow: 1,
@@ -37,7 +41,8 @@ function App({ lines, dispatch }) {
           <Typography variant="h6" className={classes.title}>
             Redux Paint
           </Typography>
-          <UndoButton />
+          <UndoButton className={classes.menuButton}/>
+          <RedoButton className={classes.menuButton}/>
         </Toolbar>
       </AppBar>
       <main className={classes.content}>
@@ -53,6 +58,7 @@ function App({ lines, dispatch }) {
 
 const mapStateToProps = (state) => ({
   lines: state.lines,
+  future: state.future,
 });
 
 export default connect(mapStateToProps, null)(App);

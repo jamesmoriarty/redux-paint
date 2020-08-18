@@ -1,4 +1,4 @@
-import { LINE_START, LINE_NEXT, LINE_UNDO } from "./actionTypes";
+import { LINE_START, LINE_NEXT, LINE_UNDO, LINE_REDO } from "./actionTypes";
 
 export const lineStart = (refCanvas, event) => ({
   type: LINE_START,
@@ -18,5 +18,10 @@ export const lineNext = (refCanvas, event) => ({
 
 export const lineUndo = () => ({
   type: LINE_UNDO,
+  payload: {},
+});
+
+export const lineRedo = () => ({
+  type: LINE_REDO,
   payload: {},
 });
