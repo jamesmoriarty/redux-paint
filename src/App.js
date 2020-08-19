@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     overflow: "auto",
   },
   container: {
-    paddingTop: theme.spacing(8),
+    paddingTop: theme.spacing(12),
     paddingBottom: theme.spacing(8),
   },
   canvas: {
@@ -45,7 +45,7 @@ function App({ history, dispatch }) {
         </Toolbar>
       </AppBar>
       <main className={classes.content}>
-        <Container maxWidth="lg" className={classes.container}>
+        <Container className={classes.container}>
           <Card className={classes.canvas} raised={true}>
             <Canvas />
           </Card>
