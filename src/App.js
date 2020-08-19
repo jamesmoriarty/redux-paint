@@ -1,5 +1,4 @@
 import React from "react";
-import { connect } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -56,4 +55,4 @@ function App({ history, dispatch }) {
   );
 }
 
-export default connect(null, null)(App);
+export default App;
