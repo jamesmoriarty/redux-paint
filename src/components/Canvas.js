@@ -9,16 +9,16 @@ function render(refCanvas, history) {
   const ctx = refCanvas.current.getContext("2d");
 
   for (const op of history) {
-    switch(op.type) {
+    switch (op.type) {
       case "line":
       default:
-      const { x, y } = op[0];
-      ctx.beginPath();
-      ctx.moveTo(x, y);
-      for (const { x, y } of op) {
-        ctx.lineTo(x, y);
-        ctx.stroke();
-      }
+        const { x, y } = op[0];
+        ctx.beginPath();
+        ctx.moveTo(x, y);
+        for (const { x, y } of op) {
+          ctx.lineTo(x, y);
+          ctx.stroke();
+        }
     }
   }
 }
@@ -38,19 +38,16 @@ function Canvas({ history, dispatch }) {
       switch (event.type) {
         case "mousedown":
           setState({ mouseDown: true });
-          dispatch(opStart(refCanvas, event));
-
-          break;
+          return dispatch(opStart(refCanvas, event));
         case "mousemove":
-          if (state.mouseDown) dispatch(opContinue(refCanvas, event));
-
-          break;
+          if (state.mouseDown) {
+            return dispatch(opContinue(refCanvas, event));
+          }
+          return;
         case "mouseup":
-          setState({ mouseDown: false });
-
-          break;
+          return setState({ mouseDown: false });
         default:
-          console.log(event);
+          return console.log(event);
       }
     };
 
