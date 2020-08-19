@@ -1,26 +1,6 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { connect } from "react-redux";
 import { opStart, opContinue } from "./../redux/actions";
-
-function bindEventListeners(refCanvas, dispatch) {
-  const onMouseMove = (event) => dispatch(opContinue(refCanvas, event));
-  const onMouseUp = (event) =>
-    refCanvas.current.removeEventListener("mousemove", onMouseMove, false);
-  const onMouseDown = (event) => {
-    dispatch(opStart(refCanvas, event));
-
-    refCanvas.current.addEventListener("mousemove", onMouseMove, false);
-  };
-
-  refCanvas.current.addEventListener("mousedown", onMouseDown, false);
-  refCanvas.current.addEventListener("mouseup", onMouseUp, false);
-
-  return () => {
-    refCanvas.current.removeEventListener("mousemove", onMouseMove, false);
-    refCanvas.current.removeEventListener("mouseup", onMouseUp, false);
-    refCanvas.current.removeEventListener("mousedown", onMouseDown, false);
-  };
-}
 
 function render(refCanvas, history) {
   // eslint-disable-next-line
@@ -49,6 +29,27 @@ function resize(refCanvas) {
 }
 
 function Canvas({ history, dispatch }) {
+  const [state, setState] = useState({ mouseDown: false }),
+    handleEvent = (event) => {
+      switch (event.type) {
+        case "mousedown":
+          setState({ mouseDown: true });
+          dispatch(opStart(refCanvas, event));
+
+          break;
+        case "mousemove":
+          if (state.mouseDown) dispatch(opContinue(refCanvas, event));
+
+          break;
+        case "mouseup":
+          setState({ mouseDown: false });
+
+          break;
+        default:
+          console.log(event);
+      }
+    };
+
   let refCanvas = useRef(null);
 
   useEffect(() => {
@@ -56,14 +57,17 @@ function Canvas({ history, dispatch }) {
   });
 
   useEffect(() => {
-    return bindEventListeners(refCanvas, dispatch);
-  }, [dispatch]);
-
-  useEffect(() => {
     render(refCanvas, history);
   });
 
-  return <canvas ref={refCanvas}></canvas>;
+  return (
+    <canvas
+      ref={refCanvas}
+      onMouseUp={handleEvent}
+      onMouseMove={handleEvent}
+      onMouseDown={handleEvent}
+    ></canvas>
+  );
 }
 
 const mapStateToProps = (state) => ({
