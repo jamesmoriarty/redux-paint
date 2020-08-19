@@ -3,13 +3,6 @@ import { connect } from "react-redux";
 import { opStart, opContinue } from "./../redux/actions";
 
 function bindEventListeners(refCanvas, dispatch) {
-  refCanvas.current.width = parseInt(
-    getComputedStyle(refCanvas.current.parentNode).getPropertyValue("width")
-  );
-  refCanvas.current.height = parseInt(
-    getComputedStyle(refCanvas.current.parentNode).getPropertyValue("height")
-  );
-
   const onMouseMove = (event) => dispatch(opContinue(refCanvas, event));
   const onMouseUp = (event) =>
     refCanvas.current.removeEventListener("mousemove", onMouseMove, false);
@@ -29,7 +22,7 @@ function bindEventListeners(refCanvas, dispatch) {
   };
 }
 
-function drawLines(refCanvas, history) {
+function render(refCanvas, history) {
   // eslint-disable-next-line
   refCanvas.current.width = refCanvas.current.width;
 
@@ -46,15 +39,28 @@ function drawLines(refCanvas, history) {
   }
 }
 
+function resize(refCanvas) {
+  refCanvas.current.width = parseInt(
+    getComputedStyle(refCanvas.current.parentNode).getPropertyValue("width")
+  );
+  refCanvas.current.height = parseInt(
+    getComputedStyle(refCanvas.current.parentNode).getPropertyValue("height")
+  );
+}
+
 function Canvas({ history, dispatch }) {
   let refCanvas = useRef(null);
+
+  useEffect(() => {
+    resize(refCanvas);
+  });
 
   useEffect(() => {
     return bindEventListeners(refCanvas, dispatch);
   }, [dispatch]);
 
   useEffect(() => {
-    drawLines(refCanvas, history);
+    render(refCanvas, history);
   });
 
   return <canvas ref={refCanvas}></canvas>;
