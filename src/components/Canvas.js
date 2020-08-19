@@ -8,13 +8,17 @@ function render(refCanvas, history) {
 
   const ctx = refCanvas.current.getContext("2d");
 
-  for (const line of history) {
-    const { x, y } = line[0];
-    ctx.beginPath();
-    ctx.moveTo(x, y);
-    for (const { x, y } of line) {
-      ctx.lineTo(x, y);
-      ctx.stroke();
+  for (const op of history) {
+    switch(op.type) {
+      case "line":
+      default:
+      const { x, y } = op[0];
+      ctx.beginPath();
+      ctx.moveTo(x, y);
+      for (const { x, y } of op) {
+        ctx.lineTo(x, y);
+        ctx.stroke();
+      }
     }
   }
 }
