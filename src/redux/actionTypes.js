@@ -1,4 +1,4 @@
-export const OP_START = "line/start";
-export const OP_CONTINUE = "line/next";
-export const UNDO = "line/undo";
-export const REDO = "line/redo";
+export const OP_START = "op/start";
+export const OP_CONTINUE = "op/continue";
+export const UNDO = "undo";
+export const REDO = "redo";
