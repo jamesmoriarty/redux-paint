@@ -1,8 +1,8 @@
-import { LINE_START, LINE_NEXT, LINE_UNDO, LINE_REDO } from "./actionTypes";
+import { OP_START, OP_CONTINUE, UNDO, REDO } from "./actionTypes";
 
 function reduce(state = { history: [], future: [] }, action) {
   switch (action.type) {
-    case LINE_START:
+    case OP_START:
       return {
         ...state,
         future: [],
@@ -10,7 +10,7 @@ function reduce(state = { history: [], future: [] }, action) {
           [{ x: action.payload.x, y: action.payload.y }],
         ]),
       };
-    case LINE_NEXT:
+    case OP_CONTINUE:
       var [last, ...rest] = state.history.slice().reverse();
       return {
         ...state,
@@ -20,13 +20,13 @@ function reduce(state = { history: [], future: [] }, action) {
           last.concat([{ x: action.payload.x, y: action.payload.y }]),
         ],
       };
-    case LINE_UNDO:
+    case UNDO:
       return {
         ...state,
         future: state.future.concat(state.history.slice(-1)),
         history: state.history.slice(0, -1),
       };
-    case LINE_REDO:
+    case REDO:
       return {
         ...state,
         future: state.future.slice(0, -1),

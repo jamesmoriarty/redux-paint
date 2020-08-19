@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { connect } from "react-redux";
-import { lineStart, lineNext } from "./../redux/actions";
+import { opStart, opContinue } from "./../redux/actions";
 
 function bindEventListeners(refCanvas, dispatch) {
   refCanvas.current.width = parseInt(
@@ -10,11 +10,11 @@ function bindEventListeners(refCanvas, dispatch) {
     getComputedStyle(refCanvas.current.parentNode).getPropertyValue("height")
   );
 
-  const onMouseMove = (event) => dispatch(lineNext(refCanvas, event));
+  const onMouseMove = (event) => dispatch(opContinue(refCanvas, event));
   const onMouseUp = (event) =>
     refCanvas.current.removeEventListener("mousemove", onMouseMove, false);
   const onMouseDown = (event) => {
-    dispatch(lineStart(refCanvas, event));
+    dispatch(opStart(refCanvas, event));
 
     refCanvas.current.addEventListener("mousemove", onMouseMove, false);
   };

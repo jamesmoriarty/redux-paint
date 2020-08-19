@@ -1,27 +1,27 @@
-import { LINE_START, LINE_NEXT, LINE_UNDO, LINE_REDO } from "./actionTypes";
+import { OP_START, OP_CONTINUE, UNDO, REDO } from "./actionTypes";
 
-export const lineStart = (refCanvas, event) => ({
-  type: LINE_START,
+export const opStart = (refCanvas, event) => ({
+  type: OP_START,
   payload: {
     x: event.pageX - refCanvas.current.offsetLeft,
     y: event.pageY - refCanvas.current.offsetTop,
   },
 });
 
-export const lineNext = (refCanvas, event) => ({
-  type: LINE_NEXT,
+export const opContinue = (refCanvas, event) => ({
+  type: OP_CONTINUE,
   payload: {
     x: event.pageX - refCanvas.current.offsetLeft,
     y: event.pageY - refCanvas.current.offsetTop,
   },
 });
 
-export const lineUndo = () => ({
-  type: LINE_UNDO,
+export const undo = () => ({
+  type: UNDO,
   payload: {},
 });
 
-export const lineRedo = () => ({
-  type: LINE_REDO,
+export const redo = () => ({
+  type: REDO,
   payload: {},
 });
