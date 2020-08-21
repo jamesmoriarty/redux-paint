@@ -1,18 +1,19 @@
-import { OP_START, OP_CONTINUE, UNDO, REDO } from "./actionTypes";
+import { OP_CREATE, OP_PATCH, UNDO, REDO } from "./actionTypes";
 
-export const opStart = (refCanvas, event) => ({
-  type: OP_START,
+export const opStart = (type, x, y) => ({
+  type: OP_CREATE,
   payload: {
-    x: event.pageX - refCanvas.current.offsetLeft,
-    y: event.pageY - refCanvas.current.offsetTop,
+    type: type,
+    x: x,
+    y: y,
   },
 });
 
-export const opContinue = (refCanvas, event) => ({
-  type: OP_CONTINUE,
+export const opContinue = (x, y) => ({
+  type: OP_PATCH,
   payload: {
-    x: event.pageX - refCanvas.current.offsetLeft,
-    y: event.pageY - refCanvas.current.offsetTop,
+    x: x,
+    y: y,
   },
 });
 
