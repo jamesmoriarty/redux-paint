@@ -1,30 +1,8 @@
 import React, { useEffect, useState, useRef } from "react";
 import { connect } from "react-redux";
-import { opStart, opContinue } from "./../redux/actions";
-import { OP_TYPE_LINE } from "./../constants";
-
-function render(refCanvas, history) {
-  // eslint-disable-next-line
-  refCanvas.current.width = refCanvas.current.width;
-
-  const ctx = refCanvas.current.getContext("2d");
-
-  for (const op of history) {
-    const { type, x, y } = op[0];
-    switch (type) {
-      case OP_TYPE_LINE:
-        ctx.beginPath();
-        ctx.moveTo(x, y);
-        for (const { x, y } of op) {
-          ctx.lineTo(x, y);
-          ctx.stroke();
-        }
-        break;
-      default:
-        throw new Error("unknown op: ", op);
-    }
-  }
-}
+import { opCreate, opUpdate } from "./../redux/actions";
+import { render } from "./../render";
+import { OP_TYPE_RECT, OP_TYPE_GESTURE } from "./../constants";
 
 function resize(refCanvas) {
   refCanvas.current.width = parseInt(
@@ -35,15 +13,17 @@ function resize(refCanvas) {
   );
 }
 
-function Canvas({ history, dispatch, type }) {
-  const [state, setState] = useState({ mouseDown: false, type: type }),
-    handleEventAsLine = (event) => {
+function Canvas({ history, dispatch, type, strokeStyle }) {
+  const [state, setState] = useState({ mouseDown: false }),
+    handleEventAs = (type, strokeStyle, event) => {
       switch (event.type) {
         case "mousedown":
           setState({ mouseDown: true });
+
           return dispatch(
-            opStart(
-              OP_TYPE_LINE,
+            opCreate(
+              type,
+              strokeStyle,
               event.pageX - refCanvas.current.offsetLeft,
               event.pageY - refCanvas.current.offsetTop
             )
@@ -51,7 +31,7 @@ function Canvas({ history, dispatch, type }) {
         case "mousemove":
           if (state.mouseDown) {
             return dispatch(
-              opContinue(
+              opUpdate(
                 event.pageX - refCanvas.current.offsetLeft,
                 event.pageY - refCanvas.current.offsetTop
               )
@@ -66,8 +46,10 @@ function Canvas({ history, dispatch, type }) {
     },
     handleEvent = (event) => {
       switch (type) {
-        case OP_TYPE_LINE:
-          return handleEventAsLine(event);
+        case OP_TYPE_GESTURE:
+          return handleEventAs(type, strokeStyle, event);
+        case OP_TYPE_RECT:
+          return handleEventAs(type, strokeStyle, event);
         default:
           throw new Error("unknown op.type: ", type);
       }

@@ -3,10 +3,11 @@ import Button from "@material-ui/core/Button";
 import { connect } from "react-redux";
 import { redo } from "./../redux/actions";
 
-function UndoButton({ future, dispatch }) {
+function UndoButton({ future, dispatch, className }) {
   return (
     <Button
       variant="contained"
+      className={className}
       disabled={future.length === 0}
       onClick={() => {
         dispatch(redo());
