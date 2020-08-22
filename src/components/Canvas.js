@@ -46,9 +46,8 @@ function Canvas({ history, dispatch, type, strokeStyle }) {
     },
     handleEvent = (event) => {
       switch (type) {
-        case OP_TYPE_GESTURE:
-          return handleEventAs(type, strokeStyle, event);
         case OP_TYPE_RECT:
+        case OP_TYPE_GESTURE:
           return handleEventAs(type, strokeStyle, event);
         default:
           throw new Error("unknown op.type: ", type);
