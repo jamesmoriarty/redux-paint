@@ -14,6 +14,7 @@ export const render = (refCanvas, history) => {
 
     switch (type) {
       case OP_TYPE_RECT:
+        // eslint-disable-next-line
         const [{ x: x2, y: y2 }, ...rest] = op.slice().reverse();
         ctx.beginPath();
         ctx.fillRect(x1, y1, (x1 - x2) * -1, (y1 - y2) * -1);
@@ -31,4 +32,4 @@ export const render = (refCanvas, history) => {
         throw new Error("unknown op: ", op);
     }
   }
-}
+};
