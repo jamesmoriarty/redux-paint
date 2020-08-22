@@ -1,15 +1,28 @@
-import { OP_CREATE, OP_PATCH, UNDO, REDO } from "./actionTypes";
-import { OP_TYPE_LINE } from "./../constants";
+import { OP_CREATE, OP_UPDATE, UNDO, REDO, OP_SET_TYPE } from "./actionTypes";
+import { OP_TYPE_DEFAULT, OP_STROKE_STYLE_DEFAULT } from "./../constants";
 
-function reduce(state = { type: OP_TYPE_LINE, history: [], future: [] }, action) {
+function reduce(
+  state = {
+    type: OP_TYPE_DEFAULT,
+    strokeStyle: OP_STROKE_STYLE_DEFAULT,
+    history: [],
+    future: [],
+  },
+  action
+) {
   switch (action.type) {
+    case OP_SET_TYPE:
+      return {
+        ...state,
+        type: action.payload.type,
+      };
     case OP_CREATE:
       return {
         ...state,
         future: [],
         history: state.history.concat([[action.payload]]),
       };
-    case OP_PATCH:
+    case OP_UPDATE:
       var [last, ...rest] = state.history.slice().reverse();
       return {
         ...state,

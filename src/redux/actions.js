@@ -1,20 +1,18 @@
-import { OP_CREATE, OP_PATCH, UNDO, REDO } from "./actionTypes";
+import { OP_CREATE, OP_UPDATE, UNDO, REDO, OP_SET_TYPE } from "./actionTypes";
 
-export const opStart = (type, x, y) => ({
-  type: OP_CREATE,
-  payload: {
-    type: type,
-    x: x,
-    y: y,
-  },
+export const setType = (type) => ({
+  type: OP_SET_TYPE,
+  payload: { type },
 });
 
-export const opContinue = (x, y) => ({
-  type: OP_PATCH,
-  payload: {
-    x: x,
-    y: y,
-  },
+export const opCreate = (type, strokeStyle, x, y) => ({
+  type: OP_CREATE,
+  payload: { type, strokeStyle, x, y },
+});
+
+export const opUpdate = (x, y) => ({
+  type: OP_UPDATE,
+  payload: { x, y },
 });
 
 export const undo = () => ({

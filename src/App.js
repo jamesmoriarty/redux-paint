@@ -1,13 +1,17 @@
 import React from "react";
+import { connect } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Card from "@material-ui/core/Card";
 import Container from "@material-ui/core/Container";
+import Button from "@material-ui/core/Button";
 import Canvas from "./components/Canvas";
 import UndoButton from "./components/UndoButton";
 import RedoButton from "./components/RedoButton";
+import { OP_SET_TYPE } from "./redux/actionTypes";
+import { OP_TYPE_RECT, OP_TYPE_GESTURE } from "./constants";
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -30,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function App({ history, dispatch }) {
+function App({ history, type, dispatch }) {
   const classes = useStyles();
 
   return (
@@ -40,6 +44,22 @@ function App({ history, dispatch }) {
           <Typography variant="h6" className={classes.title}>
             Redux Paint
           </Typography>
+          <Button
+            variant="contained"
+            color={type === OP_TYPE_GESTURE ? "secondary" : "default"}
+            className={classes.menuButton}
+            onClick={() => dispatch({type: OP_SET_TYPE, payload: { type: OP_TYPE_GESTURE }})}
+          >
+            Gesture
+          </Button>
+          <Button
+            variant="contained"
+            color={type === OP_TYPE_RECT ? "secondary" : "default"}
+            className={classes.menuButton}
+            onClick={() => dispatch({type: OP_SET_TYPE, payload: { type: OP_TYPE_RECT }})}
+          >
+            Rect
+          </Button>
           <UndoButton className={classes.menuButton} />
           <RedoButton className={classes.menuButton} />
         </Toolbar>
@@ -55,4 +75,6 @@ function App({ history, dispatch }) {
   );
 }
 
-export default App;
+const mapStateToProps = (state) => state;
+
+export default connect(mapStateToProps, null)(App);

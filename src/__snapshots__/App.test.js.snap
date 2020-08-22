@@ -18,6 +18,28 @@ Object {
               Redux Paint
             </h6>
             <button
+              class="MuiButtonBase-root MuiButton-root MuiButton-contained makeStyles-menuButton-2 MuiButton-containedSecondary"
+              tabindex="0"
+              type="button"
+            >
+              <span
+                class="MuiButton-label"
+              >
+                Gesture
+              </span>
+            </button>
+            <button
+              class="MuiButtonBase-root MuiButton-root MuiButton-contained makeStyles-menuButton-2"
+              tabindex="0"
+              type="button"
+            >
+              <span
+                class="MuiButton-label"
+              >
+                Rect
+              </span>
+            </button>
+            <button
               class="MuiButtonBase-root MuiButton-root MuiButton-contained makeStyles-menuButton-2 Mui-disabled Mui-disabled"
               disabled=""
               tabindex="-1"
@@ -30,7 +52,7 @@ Object {
               </span>
             </button>
             <button
-              class="MuiButtonBase-root MuiButton-root MuiButton-contained Mui-disabled Mui-disabled"
+              class="MuiButtonBase-root MuiButton-root MuiButton-contained makeStyles-menuButton-2 Mui-disabled Mui-disabled"
               disabled=""
               tabindex="-1"
               type="button"
@@ -73,6 +95,28 @@ Object {
             Redux Paint
           </h6>
           <button
+            class="MuiButtonBase-root MuiButton-root MuiButton-contained makeStyles-menuButton-2 MuiButton-containedSecondary"
+            tabindex="0"
+            type="button"
+          >
+            <span
+              class="MuiButton-label"
+            >
+              Gesture
+            </span>
+          </button>
+          <button
+            class="MuiButtonBase-root MuiButton-root MuiButton-contained makeStyles-menuButton-2"
+            tabindex="0"
+            type="button"
+          >
+            <span
+              class="MuiButton-label"
+            >
+              Rect
+            </span>
+          </button>
+          <button
             class="MuiButtonBase-root MuiButton-root MuiButton-contained makeStyles-menuButton-2 Mui-disabled Mui-disabled"
             disabled=""
             tabindex="-1"
@@ -85,7 +129,7 @@ Object {
             </span>
           </button>
           <button
-            class="MuiButtonBase-root MuiButton-root MuiButton-contained Mui-disabled Mui-disabled"
+            class="MuiButtonBase-root MuiButton-root MuiButton-contained makeStyles-menuButton-2 Mui-disabled Mui-disabled"
             disabled=""
             tabindex="-1"
             type="button"
