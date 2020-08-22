@@ -8,10 +8,8 @@ import Card from "@material-ui/core/Card";
 import Container from "@material-ui/core/Container";
 import Button from "@material-ui/core/Button";
 import Canvas from "./components/Canvas";
-import UndoButton from "./components/UndoButton";
-import RedoButton from "./components/RedoButton";
-import { OP_SET_TYPE } from "./redux/actionTypes";
 import { OP_TYPE_RECT, OP_TYPE_GESTURE } from "./constants";
+import { opSetType, redo, undo } from "./redux/actions";
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -34,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function App({ history, type, dispatch }) {
+function App({ history, future, type, dispatch }) {
   const classes = useStyles();
 
   return (
@@ -48,7 +46,9 @@ function App({ history, type, dispatch }) {
             variant="contained"
             color={type === OP_TYPE_GESTURE ? "secondary" : "default"}
             className={classes.menuButton}
-            onClick={() => dispatch({type: OP_SET_TYPE, payload: { type: OP_TYPE_GESTURE }})}
+            onClick={() =>
+              dispatch(opSetType(OP_TYPE_GESTURE))
+            }
           >
             Gesture
           </Button>
@@ -56,12 +56,32 @@ function App({ history, type, dispatch }) {
             variant="contained"
             color={type === OP_TYPE_RECT ? "secondary" : "default"}
             className={classes.menuButton}
-            onClick={() => dispatch({type: OP_SET_TYPE, payload: { type: OP_TYPE_RECT }})}
+            onClick={() =>
+              dispatch(opSetType(OP_TYPE_RECT))
+            }
           >
             Rect
           </Button>
-          <UndoButton className={classes.menuButton} />
-          <RedoButton className={classes.menuButton} />
+          <Button
+            variant="contained"
+            className={classes.menuButton}
+            disabled={history.length === 0}
+            onClick={() => {
+              dispatch(undo());
+            }}
+          >
+            Undo
+          </Button>
+          <Button
+            variant="contained"
+            className={classes.menuButton}
+            disabled={future.length === 0}
+            onClick={() => {
+              dispatch(redo());
+            }}
+          >
+            Redo
+          </Button>
         </Toolbar>
       </AppBar>
       <main className={classes.content}>

@@ -1,6 +1,6 @@
 import { OP_CREATE, OP_UPDATE, UNDO, REDO, OP_SET_TYPE } from "./actionTypes";
 
-export const setType = (type) => ({
+export const opSetType = (type) => ({
   type: OP_SET_TYPE,
   payload: { type },
 });
