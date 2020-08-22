@@ -7,6 +7,7 @@ import Typography from "@material-ui/core/Typography";
 import Card from "@material-ui/core/Card";
 import Container from "@material-ui/core/Container";
 import Button from "@material-ui/core/Button";
+import ButtonGroup from "@material-ui/core/ButtonGroup";
 import Canvas from "./components/Canvas";
 import { OP_TYPE_RECT, OP_TYPE_GESTURE } from "./constants";
 import { opSetType, redo, undo } from "./redux/actions";
@@ -15,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
   title: {
     flexGrow: 1,
   },
-  menuButton: {
+  toolButtonGroup: {
     marginRight: theme.spacing(2),
   },
   content: {
@@ -42,10 +43,10 @@ function App({ history, future, type, dispatch }) {
           <Typography variant="h6" className={classes.title}>
             Redux Paint
           </Typography>
+          <ButtonGroup className={classes.toolButtonGroup}>
           <Button
             variant="contained"
             color={type === OP_TYPE_GESTURE ? "secondary" : "default"}
-            className={classes.menuButton}
             onClick={() =>
               dispatch(opSetType(OP_TYPE_GESTURE))
             }
@@ -55,16 +56,16 @@ function App({ history, future, type, dispatch }) {
           <Button
             variant="contained"
             color={type === OP_TYPE_RECT ? "secondary" : "default"}
-            className={classes.menuButton}
             onClick={() =>
               dispatch(opSetType(OP_TYPE_RECT))
             }
           >
             Rect
           </Button>
+          </ButtonGroup>
+          <ButtonGroup className={classes.toolButtonGroup}>
           <Button
             variant="contained"
-            className={classes.menuButton}
             disabled={history.length === 0}
             onClick={() => {
               dispatch(undo());
@@ -74,7 +75,6 @@ function App({ history, future, type, dispatch }) {
           </Button>
           <Button
             variant="contained"
-            className={classes.menuButton}
             disabled={future.length === 0}
             onClick={() => {
               dispatch(redo());
@@ -82,6 +82,7 @@ function App({ history, future, type, dispatch }) {
           >
             Redo
           </Button>
+          </ButtonGroup>
         </Toolbar>
       </AppBar>
       <main className={classes.content}>
