@@ -1,4 +1,4 @@
-import { OP_CREATE, OP_UPDATE, UNDO, REDO, OP_SET_TYPE } from "./actionTypes";
+import { OP_CREATE, OP_UPDATE, UNDO, REDO, OP_SET_TYPE, OP_SET_COLOR } from "./actionTypes";
 import { OP_TYPE_DEFAULT, OP_STROKE_STYLE_DEFAULT } from "./../constants";
 
 function reduce(
@@ -15,6 +15,11 @@ function reduce(
       return {
         ...state,
         type: action.payload.type,
+      };
+    case OP_SET_COLOR:
+      return {
+        ...state,
+        strokeStyle: action.payload.color,
       };
     case OP_CREATE:
       return {
