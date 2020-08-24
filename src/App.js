@@ -12,8 +12,10 @@ import RedoIcon from "@material-ui/icons/Redo";
 import GestureIcon from "@material-ui/icons/Gesture";
 import LineIcon from "@material-ui/icons/Remove";
 import RectIcon from "@material-ui/icons/CheckBoxOutlineBlank";
+import ColorIcon from "@material-ui/icons/Palette";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import Canvas from "./components/Canvas";
+import ColorPicker from "./components/ColorPicker";
 import { OP_TYPE_RECT, OP_TYPE_GESTURE } from "./constants";
 import { opSetType, redo, undo } from "./redux/actions";
 
@@ -38,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function App({ history, future, type, dispatch }) {
+function App({ history, future, type, dispatch, strokeStyle }) {
   const classes = useStyles();
 
   return (
@@ -48,6 +50,13 @@ function App({ history, future, type, dispatch }) {
           <Typography variant="h6" className={classes.title}>
             Redux Paint
           </Typography>
+          <ButtonGroup className={classes.toolButtonGroup}>
+            <ColorPicker>
+              <Button variant="contained">
+                <ColorIcon style={{ color: strokeStyle }} />
+              </Button>
+            </ColorPicker>
+          </ButtonGroup>
           <ButtonGroup className={classes.toolButtonGroup}>
             <Button
               variant="contained"

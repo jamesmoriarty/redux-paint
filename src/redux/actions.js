@@ -1,8 +1,13 @@
-import { OP_CREATE, OP_UPDATE, UNDO, REDO, OP_SET_TYPE } from "./actionTypes";
+import { OP_CREATE, OP_UPDATE, UNDO, REDO, OP_SET_TYPE, OP_SET_COLOR } from "./actionTypes";
 
 export const opSetType = (type) => ({
   type: OP_SET_TYPE,
   payload: { type },
+});
+
+export const opSetColor = (color) => ({
+  type: OP_SET_COLOR,
+  payload: { color },
 });
 
 export const opCreate = (type, strokeStyle, x, y) => ({
