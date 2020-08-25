@@ -1,6 +1,6 @@
-import { OP_TYPE_RECT, OP_TYPE_GESTURE } from "./constants";
+import { OP_TYPE_RECT, OP_TYPE_GESTURE } from "./../../constants";
 
-export const render = (refCanvas, history) => {
+export const handleRender = (refCanvas, history) => {
   // eslint-disable-next-line
   refCanvas.current.width = refCanvas.current.width;
 

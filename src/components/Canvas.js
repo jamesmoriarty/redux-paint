@@ -1,54 +1,25 @@
 import React, { useEffect, useState, useRef } from "react";
 import { connect } from "react-redux";
-import { opCreate, opUpdate } from "./../redux/actions";
-import { render } from "./../render";
+import { handleOp } from "./Canvas/events";
+import { handleRender } from "./Canvas/render";
+import { handleResize } from "./Canvas/resize";
 import { OP_TYPE_RECT, OP_TYPE_GESTURE } from "./../constants";
-
-function resize(refCanvas) {
-  refCanvas.current.width = parseInt(
-    getComputedStyle(refCanvas.current.parentNode).getPropertyValue("width")
-  );
-  refCanvas.current.height = parseInt(
-    getComputedStyle(refCanvas.current.parentNode).getPropertyValue("height")
-  );
-}
 
 function Canvas({ history, dispatch, type, strokeStyle }) {
   const [state, setState] = useState({ mouseDown: false }),
-    handleEventAs = (type, strokeStyle, event) => {
-      switch (event.type) {
-        case "mousedown":
-          setState({ mouseDown: true });
-
-          return dispatch(
-            opCreate(
-              type,
-              strokeStyle,
-              event.pageX - refCanvas.current.offsetLeft,
-              event.pageY - refCanvas.current.offsetTop
-            )
-          );
-        case "mousemove":
-          if (state.mouseDown) {
-            return dispatch(
-              opUpdate(
-                event.pageX - refCanvas.current.offsetLeft,
-                event.pageY - refCanvas.current.offsetTop
-              )
-            );
-          }
-          return;
-        case "mouseup":
-          return setState({ mouseDown: false });
-        default:
-          throw new Error("unknown event.type: ", event.type);
-      }
-    },
     handleEvent = (event) => {
       switch (type) {
         case OP_TYPE_RECT:
         case OP_TYPE_GESTURE:
-          return handleEventAs(type, strokeStyle, event);
+          return handleOp(
+            dispatch,
+            state,
+            setState,
+            refCanvas,
+            type,
+            strokeStyle,
+            event
+          );
         default:
           throw new Error("unknown op.type: ", type);
       }
@@ -57,11 +28,11 @@ function Canvas({ history, dispatch, type, strokeStyle }) {
   let refCanvas = useRef(null);
 
   useEffect(() => {
-    resize(refCanvas);
+    handleResize(refCanvas);
   });
 
   useEffect(() => {
-    render(refCanvas, history);
+    handleRender(refCanvas, history);
   });
 
   return (

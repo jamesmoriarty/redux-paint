@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import { ChromePicker } from "react-color";
-import { opSetColor} from "./../redux/actions";
+import { opSetColor } from "./../redux/actions";
 
 function ColorPicker({ children, dispatch, strokeStyle }) {
   const [state, setState] = useState({ displayColorPicker: false }),
@@ -12,7 +12,7 @@ function ColorPicker({ children, dispatch, strokeStyle }) {
       setState({ displayColorPicker: !state.displayColorPicker });
     },
     handleChangeComplete = (color) => {
-        dispatch(opSetColor(color.hex));
+      dispatch(opSetColor(color.hex));
     },
     popover = {
       marginTop: "5vh",

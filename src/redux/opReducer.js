@@ -1,4 +1,11 @@
-import { OP_CREATE, OP_UPDATE, UNDO, REDO, OP_SET_TYPE, OP_SET_COLOR } from "./actionTypes";
+import {
+  OP_CREATE,
+  OP_UPDATE,
+  UNDO,
+  REDO,
+  OP_SET_TYPE,
+  OP_SET_COLOR,
+} from "./actionTypes";
 import { OP_TYPE_DEFAULT, OP_STROKE_STYLE_DEFAULT } from "./../constants";
 
 function reduce(
