@@ -16,8 +16,7 @@ import ColorIcon from "@material-ui/icons/Palette";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import Canvas from "./components/Canvas";
 import ColorPicker from "./components/ColorPicker";
-import { OP_TYPE_RECT, OP_TYPE_GESTURE } from "./constants";
-import { opSetType, redo, undo } from "./redux/actions";
+import { OP_TYPES, ACTION_TYPES } from "./constants";
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -40,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function App({ history, future, type, dispatch, strokeStyle }) {
+function App({ history, future, type, dispatch, color }) {
   const classes = useStyles();
 
   return (
@@ -53,15 +52,22 @@ function App({ history, future, type, dispatch, strokeStyle }) {
           <ButtonGroup className={classes.toolButtonGroup}>
             <ColorPicker>
               <Button variant="contained">
-                <ColorIcon style={{ color: strokeStyle }} />
+                <ColorIcon style={{ color: color }} />
               </Button>
             </ColorPicker>
           </ButtonGroup>
           <ButtonGroup className={classes.toolButtonGroup}>
             <Button
               variant="contained"
-              color={type === OP_TYPE_GESTURE ? "secondary" : "default"}
-              onClick={() => dispatch(opSetType(OP_TYPE_GESTURE))}
+              color={
+                type === OP_TYPES.OP_TYPE_GESTURE ? "secondary" : "default"
+              }
+              onClick={() =>
+                dispatch({
+                  type: ACTION_TYPES.OP_SET_TYPE,
+                  payload: { type: OP_TYPES.OP_TYPE_GESTURE },
+                })
+              }
             >
               <GestureIcon />
             </Button>
@@ -70,8 +76,13 @@ function App({ history, future, type, dispatch, strokeStyle }) {
             </Button>
             <Button
               variant="contained"
-              color={type === OP_TYPE_RECT ? "secondary" : "default"}
-              onClick={() => dispatch(opSetType(OP_TYPE_RECT))}
+              color={type === OP_TYPES.OP_TYPE_RECT ? "secondary" : "default"}
+              onClick={() =>
+                dispatch({
+                  type: ACTION_TYPES.OP_SET_TYPE,
+                  payload: { type: OP_TYPES.OP_TYPE_RECT },
+                })
+              }
             >
               <RectIcon />
             </Button>
@@ -81,7 +92,7 @@ function App({ history, future, type, dispatch, strokeStyle }) {
               variant="contained"
               disabled={history.length === 0}
               onClick={() => {
-                dispatch(undo());
+                dispatch({ type: ACTION_TYPES.UNDO, payload: {} });
               }}
             >
               <UndoIcon />
@@ -90,7 +101,7 @@ function App({ history, future, type, dispatch, strokeStyle }) {
               variant="contained"
               disabled={future.length === 0}
               onClick={() => {
-                dispatch(redo());
+                dispatch({ type: ACTION_TYPES.REDO, payload: {} });
               }}
             >
               <RedoIcon />

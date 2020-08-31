@@ -1,53 +1,51 @@
 import {
-  OP_CREATE,
-  OP_UPDATE,
-  UNDO,
-  REDO,
-  OP_SET_TYPE,
-  OP_SET_COLOR,
-} from "./actionTypes";
-import { OP_TYPE_DEFAULT, OP_STROKE_STYLE_DEFAULT } from "./../constants";
+  State,
+  Action,
+  ACTION_TYPES,
+  OP_TYPE_DEFAULT,
+  OP_STROKE_STYLE_DEFAULT,
+} from "./constants";
 
 function reduce(
-  state = {
+  state: State = {
     type: OP_TYPE_DEFAULT,
-    strokeStyle: OP_STROKE_STYLE_DEFAULT,
+    color: OP_STROKE_STYLE_DEFAULT,
     history: [],
     future: [],
   },
-  action
+  action: Action
 ) {
   switch (action.type) {
-    case OP_SET_TYPE:
+    case ACTION_TYPES.OP_SET_TYPE:
       return {
         ...state,
         type: action.payload.type,
       };
-    case OP_SET_COLOR:
+    case ACTION_TYPES.OP_SET_COLOR:
       return {
         ...state,
-        strokeStyle: action.payload.color,
+        color: action.payload.color,
       };
-    case OP_CREATE:
+    case ACTION_TYPES.OP_CREATE:
       return {
         ...state,
         future: [],
         history: state.history.concat([[action.payload]]),
       };
-    case OP_UPDATE:
+    case ACTION_TYPES.OP_UPDATE:
       var [last, ...rest] = state.history.slice().reverse();
       return {
         ...state,
         future: [],
         history: [...rest.slice().reverse(), last.concat([action.payload])],
       };
-    case UNDO:
+    case ACTION_TYPES.UNDO:
       return {
         ...state,
         future: state.future.concat(state.history.slice(-1)),
         history: state.history.slice(0, -1),
       };
-    case REDO:
+    case ACTION_TYPES.REDO:
       return {
         ...state,
         future: state.future.slice(0, -1),
