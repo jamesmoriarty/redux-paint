@@ -14,8 +14,8 @@ import LineIcon from "@material-ui/icons/Remove";
 import RectIcon from "@material-ui/icons/CheckBoxOutlineBlank";
 import ColorIcon from "@material-ui/icons/Palette";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
-import Canvas from "./components/Canvas";
-import ColorPicker from "./components/ColorPicker";
+import Canvas from "./containers/Canvas";
+import ColorPicker from "./containers/ColorPicker";
 import { OP_TYPES, ACTION_TYPES } from "./constants";
 
 const useStyles = makeStyles((theme) => ({
