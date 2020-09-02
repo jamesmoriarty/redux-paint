@@ -1,9 +1,7 @@
 import React, { useState } from "react";
-import { connect } from "react-redux";
 import { ChromePicker } from "react-color";
-import { ACTION_TYPES } from "../constants";
 
-function ColorPicker({ children, dispatch, color }) {
+function ColorPicker({ children, onChangeComplete, color }) {
   const [state, setState] = useState({ displayColorPicker: false }),
     handleClose = () => {
       setState({ displayColorPicker: false });
@@ -12,10 +10,7 @@ function ColorPicker({ children, dispatch, color }) {
       setState({ displayColorPicker: !state.displayColorPicker });
     },
     handleChangeComplete = (color) => {
-      dispatch({
-        type: ACTION_TYPES.OP_SET_COLOR,
-        payload: { color: color.hex },
-      });
+      onChangeComplete(color);
     },
     popover = {
       marginTop: "5vh",
@@ -43,6 +38,4 @@ function ColorPicker({ children, dispatch, color }) {
   );
 }
 
-const mapStateToProps = (state) => state;
-
-export default connect(mapStateToProps, null)(ColorPicker);
+export default ColorPicker;
