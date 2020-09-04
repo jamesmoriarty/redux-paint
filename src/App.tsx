@@ -16,7 +16,7 @@ import ColorIcon from "@material-ui/icons/Palette";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import Canvas from "./containers/Canvas";
 import ColorPicker from "./containers/ColorPicker";
-import { OP_TYPES, ACTION_TYPES } from "./constants";
+import { OP_TYPES, ACTION_TYPES, State, Dispatch } from "./constants";
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -39,7 +39,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function App({ history, future, type, dispatch, color }) {
+function App({
+  history,
+  future,
+  type,
+  color,
+  onGesture,
+  onRect,
+  onUndo,
+  onRedo,
+}: any) {
   const classes = useStyles();
 
   return (
@@ -62,12 +71,7 @@ function App({ history, future, type, dispatch, color }) {
               color={
                 type === OP_TYPES.OP_TYPE_GESTURE ? "secondary" : "default"
               }
-              onClick={() =>
-                dispatch({
-                  type: ACTION_TYPES.OP_SET_TYPE,
-                  payload: { type: OP_TYPES.OP_TYPE_GESTURE },
-                })
-              }
+              onClick={onGesture}
             >
               <GestureIcon />
             </Button>
@@ -77,12 +81,7 @@ function App({ history, future, type, dispatch, color }) {
             <Button
               variant="contained"
               color={type === OP_TYPES.OP_TYPE_RECT ? "secondary" : "default"}
-              onClick={() =>
-                dispatch({
-                  type: ACTION_TYPES.OP_SET_TYPE,
-                  payload: { type: OP_TYPES.OP_TYPE_RECT },
-                })
-              }
+              onClick={onRect}
             >
               <RectIcon />
             </Button>
@@ -91,18 +90,14 @@ function App({ history, future, type, dispatch, color }) {
             <Button
               variant="contained"
               disabled={history.length === 0}
-              onClick={() => {
-                dispatch({ type: ACTION_TYPES.UNDO, payload: {} });
-              }}
+              onClick={onUndo}
             >
               <UndoIcon />
             </Button>
             <Button
               variant="contained"
               disabled={future.length === 0}
-              onClick={() => {
-                dispatch({ type: ACTION_TYPES.REDO, payload: {} });
-              }}
+              onClick={onRedo}
             >
               <RedoIcon />
             </Button>
@@ -120,6 +115,29 @@ function App({ history, future, type, dispatch, color }) {
   );
 }
 
-const mapStateToProps = (state) => state;
+const mapStateToProps = (state: State) => state;
 
-export default connect(mapStateToProps, null)(App);
+const mapDispatchToProps = (dispatch: Dispatch) => {
+  return {
+    onGesture: () => {
+      dispatch({
+        type: ACTION_TYPES.OP_SET_TYPE,
+        payload: { type: OP_TYPES.OP_TYPE_GESTURE },
+      });
+    },
+    onRect: () => {
+      dispatch({
+        type: ACTION_TYPES.OP_SET_TYPE,
+        payload: { type: OP_TYPES.OP_TYPE_RECT },
+      });
+    },
+    onUndo: () => {
+      dispatch({ type: ACTION_TYPES.UNDO, payload: {} });
+    },
+    onRedo: () => {
+      dispatch({ type: ACTION_TYPES.REDO, payload: {} });
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

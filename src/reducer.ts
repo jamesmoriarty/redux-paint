@@ -30,14 +30,22 @@ function reduce(
       return {
         ...state,
         future: [],
-        history: state.history.concat([[action.payload]]),
+        history: state.history.concat([action.payload]),
       };
     case ACTION_TYPES.OP_UPDATE:
-      var [last, ...rest] = state.history.slice().reverse();
+      const { type, color, points } = state.history.slice(-1)[0],
+        { x, y } = action.payload;
+
       return {
         ...state,
         future: [],
-        history: [...rest.slice().reverse(), last.concat([action.payload])],
+        history: state.history.slice(0, -1).concat([
+          {
+            type,
+            color,
+            points: points.concat([{ x, y }]),
+          },
+        ]),
       };
     case ACTION_TYPES.UNDO:
       return {
