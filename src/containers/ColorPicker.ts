@@ -1,10 +1,10 @@
 import { connect } from "react-redux";
-import { State, ACTION_TYPES } from "../constants";
+import { ACTION_TYPES, State, Dispatch } from "../constants";
 import ColorPicker from "../components/ColorPicker";
 
 const mapStateToProps = (state: State) => state;
 
-const mapDispatchToProps = (dispatch: any) => {
+const mapDispatchToProps = (dispatch: Dispatch) => {
   return {
     onChangeComplete: (color: any) => {
       dispatch({

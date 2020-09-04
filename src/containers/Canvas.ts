@@ -1,10 +1,10 @@
 import { connect } from "react-redux";
-import { ACTION_TYPES, OP_TYPES, State } from "../constants";
+import { ACTION_TYPES, OP_TYPES, State, Dispatch } from "../constants";
 import Canvas from "../components/Canvas";
 
 const mapStateToProps = (state: State) => state;
 
-const mapDispatchToProps = (dispatch: any) => {
+const mapDispatchToProps = (dispatch: Dispatch) => {
   return {
     onEvent: (
       opType: OP_TYPES,
@@ -23,20 +23,19 @@ const mapDispatchToProps = (dispatch: any) => {
                 payload: {
                   type: opType,
                   color: color,
-                  x: x,
-                  y: y,
+                  points: [{ x, y }],
                 },
               });
             case "mousemove":
               return dispatch({
                 type: ACTION_TYPES.OP_UPDATE,
                 payload: {
-                  x: x,
-                  y: y,
+                  x,
+                  y,
                 },
               });
             default:
-              throw new Error("unknown state");
+              throw new Error("unknown event.type");
           }
         default:
           throw new Error("unknown op.type: " + opType);

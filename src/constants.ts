@@ -1,11 +1,9 @@
 export interface State {
   type: OP_TYPES;
   color: string;
-  history: OpPayload[][];
-  future: OpPayload[][];
+  history: Op[];
+  future: Op[];
 }
-
-export type OpPayload = OpCreatePayload | OpUpdatePayload;
 
 export type Action =
   | UndoAction
@@ -15,6 +13,8 @@ export type Action =
   | OpCreateAction
   | OpUpdateAction;
 
+export type Dispatch = (action: Action) => void;
+
 export enum OP_TYPES {
   OP_TYPE_GESTURE,
   OP_TYPE_RECT,
@@ -23,17 +23,24 @@ export enum OP_TYPES {
 export const OP_TYPE_DEFAULT = OP_TYPES.OP_TYPE_GESTURE;
 export const OP_STROKE_STYLE_DEFAULT = "#333";
 
-export type OpCreatePayload = {
-  type: OP_TYPES;
-  color: string;
+export type Point = {
   x: number;
   y: number;
 };
 
-export type OpUpdatePayload = {
-  x: number;
-  y: number;
+export type Op = {
+  type: OP_TYPES;
+  color: string;
+  points: Point[];
 };
+
+export type OpCreatePayload = {
+  type: OP_TYPES;
+  color: string;
+  points: Point[];
+};
+
+export type OpUpdatePayload = Point;
 
 export enum ACTION_TYPES {
   OP_SET_TYPE,
