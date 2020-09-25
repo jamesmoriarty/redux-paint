@@ -6,7 +6,7 @@ Simple "time traveling" paint application.
 
 ## Examples
 
-- [jamesmoriarty.xyz](http://www.jamesmoriarty.xyz/redux-paint/).
+- [jamesmoriarty.xyz](http://www.jamesmoriarty.xyz/redux-paint/)
 
 ## Screenshots
 
