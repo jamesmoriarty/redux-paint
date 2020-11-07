@@ -53,9 +53,7 @@ function App({
     <div>
       <AppBar position="relative">
         <Toolbar>
-          <Typography variant="h6" className={classes.title}>
-            Redux Paint
-          </Typography>
+          <Typography className={classes.title}></Typography>
           <ButtonGroup className={classes.toolButtonGroup}>
             <ColorPicker>
               <Button variant="contained">
