@@ -2,7 +2,7 @@
 
 ![ci](https://github.com/jamesmoriarty/redux-paint/workflows/ci/badge.svg) ![GitHub package.json version](https://img.shields.io/github/package-json/v/jamesmoriarty/redux-paint)
 
-Simple "time traveling" paint application. 
+Simple "time traveling" paint application.
 
 ## Examples
 

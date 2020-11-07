@@ -1,4 +1,4 @@
-import { Op, OP_TYPES } from "../../constants";
+import { Op, OP_TYPES } from "../../types";
 
 export const handleRender = (
   refCanvas: React.RefObject<HTMLCanvasElement>,

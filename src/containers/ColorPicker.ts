@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import { ACTION_TYPES, State, Dispatch } from "../constants";
+import { ACTION_TYPES, State, Dispatch } from "../types";
 import ColorPicker from "../components/ColorPicker";
 
 const mapStateToProps = (state: State) => state;

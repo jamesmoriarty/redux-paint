@@ -4,7 +4,7 @@ import {
   ACTION_TYPES,
   OP_TYPE_DEFAULT,
   OP_STROKE_STYLE_DEFAULT,
-} from "./constants";
+} from "./types";
 
 function reduce(
   state: State = {

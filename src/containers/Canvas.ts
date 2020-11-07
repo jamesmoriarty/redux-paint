@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import { ACTION_TYPES, OP_TYPES, State, Dispatch } from "../constants";
+import { ACTION_TYPES, OP_TYPES, State, Dispatch } from "../types";
 import Canvas from "../components/Canvas";
 
 const mapStateToProps = (state: State) => state;

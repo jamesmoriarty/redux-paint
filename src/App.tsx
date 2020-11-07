@@ -1,5 +1,4 @@
 import React from "react";
-import { connect } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -10,20 +9,19 @@ import Button from "@material-ui/core/Button";
 import UndoIcon from "@material-ui/icons/Undo";
 import RedoIcon from "@material-ui/icons/Redo";
 import GestureIcon from "@material-ui/icons/Gesture";
-import LineIcon from "@material-ui/icons/Remove";
 import RectIcon from "@material-ui/icons/CheckBoxOutlineBlank";
 import ColorIcon from "@material-ui/icons/Palette";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import Canvas from "./containers/Canvas";
 import ColorPicker from "./containers/ColorPicker";
-import { OP_TYPES, ACTION_TYPES, State, Dispatch } from "./constants";
+import { OP_TYPES } from "./types";
 
 const useStyles = makeStyles((theme) => ({
   title: {
     flexGrow: 1,
   },
   toolButtonGroup: {
-    marginRight: theme.spacing(2),
+    marginRight: theme.spacing(1),
   },
   content: {
     flexGrow: 1,
@@ -75,9 +73,6 @@ function App({
             >
               <GestureIcon />
             </Button>
-            <Button variant="contained" disabled={true}>
-              <LineIcon />
-            </Button>
             <Button
               variant="contained"
               color={type === OP_TYPES.OP_TYPE_RECT ? "secondary" : "default"}
@@ -115,29 +110,4 @@ function App({
   );
 }
 
-const mapStateToProps = (state: State) => state;
-
-const mapDispatchToProps = (dispatch: Dispatch) => {
-  return {
-    onGesture: () => {
-      dispatch({
-        type: ACTION_TYPES.OP_SET_TYPE,
-        payload: { type: OP_TYPES.OP_TYPE_GESTURE },
-      });
-    },
-    onRect: () => {
-      dispatch({
-        type: ACTION_TYPES.OP_SET_TYPE,
-        payload: { type: OP_TYPES.OP_TYPE_RECT },
-      });
-    },
-    onUndo: () => {
-      dispatch({ type: ACTION_TYPES.UNDO, payload: {} });
-    },
-    onRedo: () => {
-      dispatch({ type: ACTION_TYPES.REDO, payload: {} });
-    },
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default App;
